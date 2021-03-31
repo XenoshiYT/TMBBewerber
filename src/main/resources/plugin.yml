@@ -1,0 +1,54 @@
+name: TMBBewerber
+version: 3.0
+author: XenoDEV
+api-version: 1.16
+
+main: me.xenodev.tmbbe.main.Main
+
+commands:
+  gm:
+    description: Setze den Gamemode eines Spielers um
+  gamemode:
+    description: Setze den Gamemode eines Spielers um
+  bewerben:
+    description: Bewerbe dich für das TMB Team
+  abgeben:
+    description: Bewerbe dich für das TMB Team
+  abbrechen:
+    description: Lösche deine Bewerbung für das TMB Team
+  löschen:
+    description: Lösche deine Bewerbung für das TMB Team
+  check:
+    description: Schaue den Status deiner Bewerbung an
+  bewerten:
+    description: Bewerte die abgegebenen Bewerbungen
+  sign:
+    description: Signiere ein Item in deiner Hand
+  signate:
+    description: Signiere ein Item in deiner Hand
+  oz:
+    description: Schaue die Onlinezeit eines Spieler an
+  ot:
+    description: Schaue die Onlinezeit eines Spieler an
+  onlinezeit:
+    description: Schaue die Onlinezeit eines Spieler an
+  onlinetime:
+    description: Schaue die Onlinezeit eines Spieler an
+  rename:
+    description: Nenne ein Item in deiner Hand um
+  changelog:
+    description: Schaue dir die Changelogs an
+  tp:
+    description: Teleportiere dich zu Spielern
+  tphere:
+    description: Teleportiere Spieler zu dir
+  tpcord:
+    description: Teleportiere dich zu Coordinaten
+  invsee:
+    description: Schaue das Inventar von einem Spieler an
+  wartung:
+    description: Schalte den Wartungsmodus an oder aus
+  spawn:
+    description: Teleportiere dich zum Spawn
+  endersee:
+    description: Schaue die Enderchest von einem Spieler an

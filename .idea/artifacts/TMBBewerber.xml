@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TMBBewerber">
+    <output-path>$USER_HOME$/Documents/Development/Fertige Plugins</output-path>
+    <root id="archive" name="TMBBewerber.jar">
+      <element id="module-output" name="TMBBewerber" />
+    </root>
+  </artifact>
+</component>
