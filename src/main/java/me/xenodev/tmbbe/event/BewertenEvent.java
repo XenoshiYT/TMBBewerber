@@ -174,7 +174,7 @@ public class BewertenEvent implements Listener {
         }
     }
 
-    private void openAbhlenen(Player p,Inventory inv){
+    private void openAblehnen(Player p,Inventory inv){
 
 
         for(int i = 0; i < 54; i++){
