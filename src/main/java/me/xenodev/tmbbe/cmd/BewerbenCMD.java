@@ -7,9 +7,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 public class BewerbenCMD implements CommandExecutor {
 
@@ -17,16 +21,47 @@ public class BewerbenCMD implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player p = (Player)sender;
 
+        //Create Default Configuration
+        File file = new File("plugins//TMBClan//Bewertungen//" + p.getName() + ".yml");
+        YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+        if (!file.exists()) {
+            file.mkdir();
+        }
+        cfg.set("angenommen", " ");
+
+        //Custom noch nicht implementiert
+        //cfg.set("custom",false);
+        //cfg.set("custom.text",null);
+
         if(cmd.getName().equalsIgnoreCase("bewerben") || cmd.getName().equalsIgnoreCase("abgeben")){
-            if(!Bewertungen.getAnnahme(p.getUniqueId().toString()).equals("Angenommen")){
-                if(!Bewertungen.getAnnahme(p.getUniqueId().toString()).equals("Teammitglied")){
-                    if(!Bewertungen.getAnnahme(p.getUniqueId().toString()).equals("Waiting")) {
+            if(!cfg.get("angenommen").equals("Angenommen")){
+                if(!cfg.get("angenommen").equals("Teammitglied")){
+                    if(!cfg.get("angenommen").equals("Waiting")) {
                         if (!Abgaben.players.contains(p.getName())) {
                             Abgaben.players.add(p.getName());
-                            Bewertungen.setAnnahme(p.getUniqueId().toString(), "Waiting");
-                            Bewertungen.setDate(p.getUniqueId().toString());
-                            Bewertungen.setTime(p.getUniqueId().toString());
-                            Bewertungen.setGrund(p.getUniqueId().toString(), Arrays.asList(""));
+                            cfg.set("angenommen","Waiting");
+
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+                            String date = dateFormat.format(new Date());
+
+                            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+                            String time = timeFormat.format(new Date());
+
+                            cfg.set("date",date);
+                            cfg.set("time",time);
+                            cfg.set("terra.forming", false);
+                            cfg.set("terra.aufbau", false);
+                            cfg.set("terra.coloring", false);
+                            cfg.set("terra.nichtvorhanden", false);
+                            cfg.set("plot.vegetation", false);
+                            cfg.set("plot.zuleer", false);
+                            cfg.set("plot.zusammenhangslos", false);
+                            cfg.set("plot.zuvoll", false);
+                            cfg.set("mapping.baeume", false);
+                            cfg.set("struktur.detailsetzung", false);
+                            cfg.set("struktur.dach", false);
+                            cfg.set("struktur.detail", false);
+                            cfg.set("struktur.aufbau", false);
                             p.sendMessage(Main.prefix + "§7Du hast deine Bewerbung abgegeben");
 
                             for(Player all : Bukkit.getOnlinePlayers()){

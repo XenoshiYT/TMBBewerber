@@ -1,9 +1,12 @@
 package me.xenodev.tmbbe.utils;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.plugin.PluginAwareness;
 
 import java.util.Arrays;
 
@@ -25,7 +28,14 @@ public class ItemBuilder {
         meta.setDisplayName(name);
         return this;
     }
-
+    public ItemBuilder addEnchantment(Enchantment enchantment,Integer lvl,boolean b){
+        meta.addEnchant(enchantment,lvl,b);
+        return this;
+    }
+    public ItemBuilder addFlag(ItemFlag flag){
+        meta.addItemFlags(flag);
+        return this;
+    }
     public ItemBuilder setAmount(Integer amount){
         item.setAmount(amount);
 

@@ -1,6 +1,8 @@
 name: TMBBewerber
-version: 3.0
-author: XenoDEV
+version: 3.2
+authors:
+  -XenoDEV
+  -TheLucas777
 api-version: 1.16
 
 main: me.xenodev.tmbbe.main.Main
