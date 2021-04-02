@@ -3,6 +3,9 @@
     <output-path>$USER_HOME$/Documents/Development/Fertige Plugins</output-path>
     <root id="archive" name="TMBBewerber.jar">
       <element id="module-output" name="TMBBewerber" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" />
+      </element>
     </root>
   </artifact>
 </component>
