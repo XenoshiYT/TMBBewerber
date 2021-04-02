@@ -17,7 +17,7 @@ public class LöschenCMD implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player p = (Player)sender;
-        File file = new File("plugins//TMBClan//Bewertungen//" + p.getName() + ".yml");
+        File file = new File("plugins//TMBClan//Bewertungen", p.getName() + ".yml");
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
         if(cmd.getName().equalsIgnoreCase("abbrechen") || cmd.getName().equalsIgnoreCase("löschen")){

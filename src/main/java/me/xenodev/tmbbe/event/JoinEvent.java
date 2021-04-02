@@ -25,7 +25,7 @@ public class JoinEvent implements Listener {
     public void onJoin(PlayerJoinEvent e){
         Player p = e.getPlayer();
 
-        File file = new File("plugins//TMBClan//Bewertungen//" + p.getName() + ".yml");
+        File file = new File("plugins//TMBClan//Bewertungen", p.getName() + ".yml");
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
         e.setJoinMessage(Main.prefix + "§7Der Spieler §6" + p.getName() + " §7ist §abeigetreten");

@@ -29,7 +29,7 @@ public class BewertenEvent implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
         Player p = e.getPlayer();
-        File file = new File("plugins//TMBClan//Bewertungen//" + p.getName() + ".yml");
+        File file = new File("plugins//TMBClan//Bewertungen", p.getName() + ".yml");
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
         if (BewertenCMD.bewerten.contains(p)) {
@@ -59,7 +59,7 @@ public class BewertenEvent implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
-        File file = new File("plugins//TMBClan//Bewertungen//" + p.getName() + ".yml");
+        File file = new File("plugins//TMBClan//Bewertungen", p.getName() + ".yml");
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
         if (e.getView().getTitle().equals("§7>> §6Bewerten §7<<")) {
             e.setCancelled(true);
@@ -335,7 +335,7 @@ public class BewertenEvent implements Listener {
 
     private void openAblehnen(Player p, Inventory inv) {
 
-        File file = new File("plugins//TMBClan//Bewertungen//" + p.getName() + ".yml");
+        File file = new File("plugins//TMBClan//Bewertungen", p.getName() + ".yml");
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
 

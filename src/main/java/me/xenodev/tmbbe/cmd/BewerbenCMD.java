@@ -23,7 +23,7 @@ public class BewerbenCMD implements CommandExecutor {
         Player p = (Player)sender;
 
         //Create Default Configuration
-        File file = new File("plugins//TMBClan//Bewertungen//" + p.getName() + ".yml");
+        File file = new File("plugins//TMBClan//Bewertungen", p.getName() + ".yml");
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
         if (!file.exists()) {
             file.mkdir();

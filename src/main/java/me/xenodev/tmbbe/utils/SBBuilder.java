@@ -21,8 +21,9 @@ public class SBBuilder {
     private static Team team;
 
     public static void setScoreboard(Player p) {
-        File file = new File("plugins//TMBClan//Bewertungen//" + p.getName() + ".yml");
+        File file = new File("plugins//TMBClan//Bewertungen", p.getName() + ".yml");
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+
         Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
         Objective obj = board.registerNewObjective("main", "main", "§7» §5§lT§deam§5§lM§dega§5§lB§dyte §7«");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
@@ -49,7 +50,7 @@ public class SBBuilder {
     }
 
     public static void updateScoreboard(Player p) {
-        File file = new File("plugins//TMBClan//Bewertungen//" + p.getName() + ".yml");
+        File file = new File("plugins//TMBClan//Bewertungen", p.getName() + ".yml");
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
         Scoreboard board = p.getScoreboard();
         Objective obj = board.getObjective("main");
