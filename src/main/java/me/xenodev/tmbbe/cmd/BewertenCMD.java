@@ -27,10 +27,6 @@ public class BewertenCMD implements CommandExecutor {
                     bewerten.remove(p);
                     p.sendMessage(Main.prefix + "§7Du hast den Bewertungsmodus §cverlassen");
                     PlayerEvent.currentplayer.remove(p);
-                    for(int i =0; i < 15; i++){
-                        Bewertungen.reason.remove(i);
-                    }
-                    Bewertungen.endreason.clear();
                     p.getInventory().setItem(7, new ItemStack(Material.AIR));
                     p.getInventory().setItem(8, new ItemStack(Material.AIR));
                 }else{

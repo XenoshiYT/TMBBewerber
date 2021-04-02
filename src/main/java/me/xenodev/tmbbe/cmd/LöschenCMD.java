@@ -7,20 +7,24 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+
+import java.io.File;
 
 public class LöschenCMD implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player p = (Player)sender;
+        File file = new File("plugins//TMBClan//Bewertungen//" + p.getName() + ".yml");
+        YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
         if(cmd.getName().equalsIgnoreCase("abbrechen") || cmd.getName().equalsIgnoreCase("löschen")){
-            if(!Bewertungen.getAnnahme(p.getUniqueId().toString()).equals("Abgelehnt") || !Bewertungen.getAnnahme(p.getUniqueId().toString()).equals("Angenommen")){
-                if(Abgaben.players.contains(p.getName()) && Bewertungen.getAnnahme(p.getUniqueId().toString()).equals("Waiting")){
+            if(!cfg.get("angenommen").equals("Abgelehnt") || !cfg.get("angenommen").equals("Angenommen")){
+                if(Abgaben.players.contains(p.getName()) && cfg.get("angenommen").equals("Waiting")){
                     Abgaben.players.remove(p.getName());
-                    Bewertungen.setAnnahme(p.getUniqueId().toString(), null);
-                    Bewertungen.setAnnahme(p.getUniqueId().toString(), "nothing");
+                    file.delete();
                     p.sendMessage(Main.prefix + "§7Du hast deine Bewerbung gelöscht");
 
                     for(Player all : Bukkit.getOnlinePlayers()){

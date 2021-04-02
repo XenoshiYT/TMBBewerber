@@ -11,6 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -62,6 +63,11 @@ public class BewerbenCMD implements CommandExecutor {
                             cfg.set("struktur.dach", false);
                             cfg.set("struktur.detail", false);
                             cfg.set("struktur.aufbau", false);
+                            try {
+                                cfg.save(file);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             p.sendMessage(Main.prefix + "§7Du hast deine Bewerbung abgegeben");
 
                             for(Player all : Bukkit.getOnlinePlayers()){

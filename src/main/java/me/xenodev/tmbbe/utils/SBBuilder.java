@@ -49,6 +49,8 @@ public class SBBuilder {
     }
 
     public static void updateScoreboard(Player p) {
+        File file = new File("plugins//TMBClan//Bewertungen//" + p.getName() + ".yml");
+        YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
         Scoreboard board = p.getScoreboard();
         Objective obj = board.getObjective("main");
 
@@ -56,7 +58,7 @@ public class SBBuilder {
         IPermissionGroup permgroup = CloudNetDriver.getInstance().getPermissionManagement().getHighestPermissionGroup(permuser);
 
         obj.getScore(updateTeam(board, "rang", "§9§l" + permgroup.getName(), "", ChatColor.BLUE)).setScore(10);
-        obj.getScore(updateTeam(board, "status", "§e§l" + Bewertungen.getAnnahme(p.getUniqueId().toString()), "", ChatColor.GRAY)).setScore(7);
+        obj.getScore(updateTeam(board, "status", "§e§l" + cfg.get("angenommen").toString(), "", ChatColor.GRAY)).setScore(7);
         obj.getScore(updateTeam(board, "time", "§a§l" + SQLTime.changeTime(p.getUniqueId()), "", ChatColor.YELLOW)).setScore(4);
     }
 

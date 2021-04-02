@@ -32,7 +32,7 @@ public class PlayerEvent implements Listener {
 
                     for (String name : Abgaben.players) {
                         OfflinePlayer t = Bukkit.getOfflinePlayer(name);
-                        inv.addItem(new ItemBuilder(Material.PLAYER_HEAD).setOwner(name).setAmount(1).setName("§6" + name).setLore("§7Hat sich beworben am", "", "§7Datum: §a" + Bewertungen.getDate(t.getUniqueId().toString()), "§7Zeit: §a" + Bewertungen.getTime(t.getUniqueId().toString())).build());
+                        inv.setItem(4, new ItemBuilder(Material.PLAYER_HEAD).setOwner(PlayerEvent.currentplayer.get(p)).setName("§6" + PlayerEvent.currentplayer.get(p)).build());
                     }
 
                     for (int i = 36; i < 45; i++) {

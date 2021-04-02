@@ -87,8 +87,13 @@ public class BewertenEvent implements Listener {
             e.setCancelled(true);
             if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§aBestätigen")) {
                 Player t = Bukkit.getPlayerExact(PlayerEvent.currentplayer.get(p));
-                if (!Bewertungen.getAnnahme(t.getUniqueId().toString()).equals("Angenommen")) {
-                    Bewertungen.setAnnahme(t.getUniqueId().toString(), "Angenommen");
+                if (!cfg.get("angenommen").equals("Angenommen")) {
+                    cfg.set("angenommen","Angenommen");
+                    try {
+                        cfg.save(file);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                     IPermissionManagement manager = CloudNetDriver.getInstance().getPermissionManagement();
                     IPermissionUser player = manager.getUser(t.getUniqueId());
                     if (player.inGroup("Neuling")) {
