@@ -26,8 +26,6 @@ import java.io.IOException;
 
 public class BewertenEvent implements Listener {
 
-    public Integer amount = 0;
-
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
         Player p = e.getPlayer();
@@ -88,7 +86,7 @@ public class BewertenEvent implements Listener {
             if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§aBestätigen")) {
                 Player t = Bukkit.getPlayerExact(PlayerEvent.currentplayer.get(p));
                 if (!cfg.get("angenommen").equals("Angenommen")) {
-                    cfg.set("angenommen","Angenommen");
+                    cfg.set("angenommen", "Angenommen");
                     try {
                         cfg.save(file);
                     } catch (IOException ioException) {
@@ -108,7 +106,7 @@ public class BewertenEvent implements Listener {
                     Abgaben.addArray();
                     p.closeInventory();
                     p.sendMessage(Main.prefix + "§7Der Spieler wurde angenommen");
-                    amount = 0;
+
                 } else {
                     Abgaben.players.remove(PlayerEvent.currentplayer.get(p));
                     PlayerEvent.currentplayer.remove(p);
@@ -116,10 +114,10 @@ public class BewertenEvent implements Listener {
                     Abgaben.addArray();
                     p.closeInventory();
                     p.sendMessage(Main.error + "§cDer Spieler wurde bereits angenommen");
-                    amount = 0;
+
                 }
             } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§cAbbrechen")) {
-                amount = 0;
+
                 p.closeInventory();
                 PlayerEvent.currentplayer.remove(p);
             }
