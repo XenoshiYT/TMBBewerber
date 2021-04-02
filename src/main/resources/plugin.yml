@@ -1,8 +1,6 @@
 name: TMBBewerber
-version: 3.2
-authors:
-  -XenoDEV
-  -TheLucas777
+version: 3.1
+author: XenoDEV
 api-version: 1.16
 
 main: me.xenodev.tmbbe.main.Main
@@ -54,3 +52,5 @@ commands:
     description: Teleportiere dich zum Spawn
   endersee:
     description: Schaue die Enderchest von einem Spieler an
+  grund:
+    description: Schaue die Gründe zum ablehnen an

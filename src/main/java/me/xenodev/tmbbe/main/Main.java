@@ -45,6 +45,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new WartungCMD(), this);
         getServer().getPluginManager().registerEvents(new SpawnCMD(), this);
         getServer().getPluginManager().registerEvents(new DeathEvent(), this);
+        getServer().getPluginManager().registerEvents(new GrundCMD(), this);
     }
 
     private void cmds(){
@@ -58,6 +59,8 @@ public class Main extends JavaPlugin {
         getServer().getPluginCommand("abbrechen").setExecutor(new LöschenCMD());
 
         getServer().getPluginCommand("bewerten").setExecutor(new BewertenCMD());
+
+        getServer().getPluginCommand("grund").setExecutor(new GrundCMD());
 
         getServer().getPluginCommand("check").setExecutor(new CheckCMD());
 
