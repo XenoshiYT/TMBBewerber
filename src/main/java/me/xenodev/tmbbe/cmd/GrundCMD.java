@@ -27,7 +27,7 @@ public class GrundCMD implements CommandExecutor, Listener {
 
         if(cmd.getName().equalsIgnoreCase("grund")){
             if(p.hasPermission("tmb.bewerten.grund")){
-                Inventory inv = Bukkit.createInventory(p, 9 * 6, "§7>> §6Unsere Gründe §7<<");
+                Inventory inv = Bukkit.createInventory(p, 9 * 3, "§7>> §6Unsere Gründe §7<<");
 
                 for(int i = 0; i < 27; i++){
                     inv.setItem(i, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).build());
