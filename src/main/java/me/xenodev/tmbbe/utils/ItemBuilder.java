@@ -28,8 +28,8 @@ public class ItemBuilder {
         meta.setDisplayName(name);
         return this;
     }
-    public ItemBuilder addEnchantment(Enchantment enchantment,Integer lvl,boolean b){
-        meta.addEnchant(enchantment,lvl,b);
+    public ItemBuilder addEnchantment(Enchantment enchantment,Integer lvl){
+        meta.addEnchant(enchantment,lvl, true);
         return this;
     }
     public ItemBuilder addFlag(ItemFlag flag){
