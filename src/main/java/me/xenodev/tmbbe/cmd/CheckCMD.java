@@ -32,31 +32,31 @@ public class CheckCMD implements CommandExecutor {
             if (cfg.get("angenommen").equals("Abgelehnt")) {
                 p.sendMessage(Main.prefix + "§7Die Ablehnungsgründe lauten:");
                 if (cfg.get("terra.forming").equals(true)) {
-                    p.sendMessage("  §8§l» §e ");
+                    p.sendMessage("  §8§l» §eVersuche dein Terraforming zu Verbessern");
                 } else if (cfg.get("terra.aufbau").equals(true)) {
-                    p.sendMessage("  §8§l» §e");
+                    p.sendMessage("  §8§l» §eVerbessere den Aufbau deines Terras");
                 } else if (cfg.get("terra.nichtvorhanden").equals(true)) {
-                    p.sendMessage("  §8§l» §e");
+                    p.sendMessage("  §8§l» §eDu musst dein Terra formen");
                 } else if (cfg.get("terra.coloring").equals(true)) {
-                    p.sendMessage("  §8§l» §e");
+                    p.sendMessage("  §8§l» §eVerbessere dein Terracoloring durch passende Blockwahl");
                 } else if (cfg.get("struktur.detailsetzung").equals(true)) {
-                    p.sendMessage("  §8§l» §e");
-                } else if (cfg.get("struktur.detailsetztung").equals(true)) {
-                    p.sendMessage("  §8§l» §e");
+                    p.sendMessage("  §8§l» §eVersuche die Details deiner Struktur besser zu setzen");
+                } else if (cfg.get("struktur.details").equals(true)) {
+                    p.sendMessage("  §8§l» §eVerbessere die Details deiner Strukturen");
                 } else if (cfg.get("struktur.dach").equals(true)) {
-                    p.sendMessage("  §8§l» §e");
+                    p.sendMessage("  §8§l» §eDer Aufbau deines Dachs ist verbesserungswürdig");
                 } else if (cfg.get("struktur.aufbau").equals(true)) {
-                    p.sendMessage("  §8§l» §e");
+                    p.sendMessage("  §8§l» §eVerbessere den Aufbau deiner Struktur");
                 } else if (cfg.get("plot.vegegation").equals(true)) {
-                    p.sendMessage("  §8§l» §e");
+                    p.sendMessage("  §8§l» §eDie Vegetation auf deinem Plot fehlt oder ist schlecht plaziert");
                 } else if (cfg.get("plot.zuleer").equals(true)) {
-                    p.sendMessage("  §8§l» §e");
+                    p.sendMessage("  §8§l» §eDein Plot fühlt sich zu leer an");
                 } else if (cfg.get("plot.zusammenhangslos").equals(true)) {
-                    p.sendMessage("  §8§l» §e");
+                    p.sendMessage("  §8§l» §eDer Aufbau deines Plots hat keinen zusammenhang");
                 } else if (cfg.get("plot.zuvoll").equals(true)) {
-                    p.sendMessage("  §8§l» §e");
+                    p.sendMessage("  §8§l» §eDein Plot fühlt sich zu voll an");
                 } else if (cfg.get("mapping.baeume").equals(true)) {
-                    p.sendMessage("  §8§l» §e");
+                    p.sendMessage("  §8§l» §eDie Qualität deiner Bäume entspricht nicht unseren Standards");
                 }
 
                     p.sendMessage("  §8§l» §e");
