@@ -31,8 +31,7 @@ public class PlayerEvent implements Listener {
                     Inventory inv = Bukkit.createInventory(p, 9 * 6, "§7>> §6Bewerber §7<<");
 
                     for (String name : Abgaben.players) {
-                        OfflinePlayer t = Bukkit.getOfflinePlayer(name);
-                        inv.setItem(4, new ItemBuilder(Material.PLAYER_HEAD).setOwner(PlayerEvent.currentplayer.get(p)).setName("§6" + PlayerEvent.currentplayer.get(p)).build());
+                        inv.addItem(new ItemBuilder(Material.PLAYER_HEAD).setOwner(name).setName("§6" + name).build());
                     }
 
                     for (int i = 36; i < 45; i++) {
@@ -54,7 +53,10 @@ public class PlayerEvent implements Listener {
             e.setCancelled(true);
             if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§7Breche den Vorgang ab")){
                 p.closeInventory();
-            }else {
+            }else if(e.getCurrentItem().getType().equals(Material.BLACK_STAINED_GLASS_PANE) || e.getCurrentItem().getType().equals(Material.BARRIER)) {
+                return;
+            }else{
+
                 String name = e.getCurrentItem().getItemMeta().getDisplayName().replace("§6", "");
                 currentplayer.put(p, name);
                 p.closeInventory();
