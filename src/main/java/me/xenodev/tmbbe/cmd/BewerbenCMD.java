@@ -25,9 +25,6 @@ public class BewerbenCMD implements CommandExecutor {
         //Create Default Configuration
         File file = new File("plugins//TMBClan//Bewertungen", p.getName() + ".yml");
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-        if (!file.exists()) {
-            file.mkdir();
-        }
         cfg.set("angenommen", " ");
 
         //Custom noch nicht implementiert
