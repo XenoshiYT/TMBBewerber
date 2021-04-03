@@ -65,6 +65,22 @@ public class JoinEvent implements Listener {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+        }else{
+            cfg.set("angenommen","nicht Abgegeben");
+            cfg.set("terra.forming", false);
+            cfg.set("terra.aufbau", false);
+            cfg.set("terra.coloring", false);
+            cfg.set("terra.nichtvorhanden", false);
+            cfg.set("plot.vegetation", false);
+            cfg.set("plot.zuleer", false);
+            cfg.set("plot.zusammenhangslos", false);
+            cfg.set("plot.zuvoll", false);
+            cfg.set("mapping.baeume", false);
+            cfg.set("struktur.detailsetzung", false);
+            cfg.set("struktur.dach", false);
+            cfg.set("struktur.details", false);
+            cfg.set("struktur.aufbau", false);
         }
+
     }
 }
