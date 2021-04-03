@@ -58,7 +58,7 @@ public class BewerbenCMD implements CommandExecutor {
                             cfg.set("mapping.baeume", false);
                             cfg.set("struktur.detailsetzung", false);
                             cfg.set("struktur.dach", false);
-                            cfg.set("struktur.detail", false);
+                            cfg.set("struktur.details", false);
                             cfg.set("struktur.aufbau", false);
                             try {
                                 cfg.save(file);

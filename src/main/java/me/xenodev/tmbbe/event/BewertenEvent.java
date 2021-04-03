@@ -59,7 +59,8 @@ public class BewertenEvent implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
-        File file = new File("plugins//TMBClan//Bewertungen", p.getName() + ".yml");
+        OfflinePlayer t = Bukkit.getOfflinePlayer(PlayerEvent.currentplayer.get(p));
+        File file = new File("plugins//TMBClan//Bewertungen", t.getName() + ".yml");
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
         if (e.getView().getTitle().equals("§7>> §6Bewerten §7<<")) {
             e.setCancelled(true);
@@ -70,7 +71,6 @@ public class BewertenEvent implements Listener {
                 inv.setItem(1, new ItemBuilder(Material.LIME_DYE).setName("§aBestätigen").build());
                 inv.setItem(7, new ItemBuilder(Material.RED_DYE).setName("§cAbbrechen").build());
 
-                OfflinePlayer t = Bukkit.getOfflinePlayer(PlayerEvent.currentplayer.get(p));
                 inv.setItem(12, new ItemBuilder(Material.PLAYER_HEAD).setOwner(PlayerEvent.currentplayer.get(p)).setName("§6" + PlayerEvent.currentplayer.get(p)).setLore("§7Hat sich beworben am", "", "§7Datum: §a" + cfg.get("date").toString(), "§7Zeit: §a" + cfg.getString("time").toString()).build());
                 p.openInventory(inv);
             } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§cAblehnen")) {
@@ -84,7 +84,6 @@ public class BewertenEvent implements Listener {
         } else if (e.getView().getTitle().equals("§7>> §6Annehmen? §7<<")) {
             e.setCancelled(true);
             if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§aBestätigen")) {
-                Player t = Bukkit.getPlayerExact(PlayerEvent.currentplayer.get(p));
                 if (!cfg.get("angenommen").equals("Angenommen")) {
                     cfg.set("angenommen", "Angenommen");
                     try {
@@ -125,7 +124,19 @@ public class BewertenEvent implements Listener {
             e.setCancelled(true);
             if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§cAbbrechen")) {
                 p.closeInventory();
-                file.delete();
+                cfg.set("terra.forming", false);
+                cfg.set("terra.aufbau", false);
+                cfg.set("terra.coloring", false);
+                cfg.set("terra.nichtvorhanden", false);
+                cfg.set("plot.vegetation", false);
+                cfg.set("plot.zuleer", false);
+                cfg.set("plot.zusammenhangslos", false);
+                cfg.set("plot.zuvoll", false);
+                cfg.set("mapping.baeume", false);
+                cfg.set("struktur.detailsetzung", false);
+                cfg.set("struktur.dach", false);
+                cfg.set("struktur.details", false);
+                cfg.set("struktur.aufbau", false);
                 PlayerEvent.currentplayer.remove(p);
             } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§aBestätigen")) {
                 p.closeInventory();
@@ -134,98 +145,136 @@ public class BewertenEvent implements Listener {
                 inv.setItem(1, new ItemBuilder(Material.LIME_DYE).setName("§aBestätigen").build());
                 inv.setItem(7, new ItemBuilder(Material.RED_DYE).setName("§cAbbrechen").build());
 
-                OfflinePlayer t = Bukkit.getOfflinePlayer(PlayerEvent.currentplayer.get(p));
                 inv.setItem(4, new ItemBuilder(Material.PLAYER_HEAD).setOwner(PlayerEvent.currentplayer.get(p)).setName("§6" + PlayerEvent.currentplayer.get(p)).build());
 
                 p.openInventory(inv);
             } else {
                 if (e.getCurrentItem().getItemMeta().hasEnchants()) {
                     if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Terra - Forming")) {
-                        cfg.set("terra.forming", true);
+                        cfg.set("terra.forming", false);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Terra - Aufbau")) {
-                        cfg.set("terra.aufbau", true);
+                        cfg.set("terra.aufbau", false);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Terra - Coloring")) {
-                        cfg.set("terra.coloring", true);
+                        cfg.set("terra.coloring", false);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Terra - Nicht Vorhanden")) {
-                        cfg.set("terra.aufbau", true);
+                        cfg.set("terra.aufbau", false);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Plot - Vegetation")) {
-                        cfg.set("plot.vegetation", true);
+                        cfg.set("plot.vegetation", false);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Plot - zu leer")) {
-                        cfg.set("plot.zuleer", true);
+                        cfg.set("plot.zuleer", false);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Plot - Zusammenhangslos")) {
-                        cfg.set("plot.zusammenhangslos", true);
+                        cfg.set("plot.zusammenhangslos", false);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Plot - zu voll")) {
-                        cfg.set("plot.zuvoll", true);
+                        cfg.set("plot.zuvoll", false);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Mapping - Bäume")) {
-                        cfg.set("mapping.baeume", true);
+                        cfg.set("mapping.baeume", false);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Struktur - Detailsetztung")) {
-                        cfg.set("struktur.detailsetztung", true);
+                        cfg.set("struktur.detailsetztung", false);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Struktur - Dach")) {
-                        cfg.set("struktur.dach", true);
+                        cfg.set("struktur.dach", false);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Struktur - Aufbau")) {
-                        cfg.set("struktur.aufbau", true);
+                        cfg.set("struktur.aufbau", false);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Struktur - Details")) {
-                        cfg.set("struktur.details", true);
+                        cfg.set("struktur.details", false);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
@@ -235,6 +284,9 @@ public class BewertenEvent implements Listener {
                 } else if (!e.getCurrentItem().getItemMeta().hasEnchants()) {
                     if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Terra - Forming")) {
                         cfg.set("terra.forming", true);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
@@ -242,6 +294,9 @@ public class BewertenEvent implements Listener {
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Terra - Aufbau")) {
                         cfg.set("terra.aufbau", true);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
@@ -249,6 +304,9 @@ public class BewertenEvent implements Listener {
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Terra - Coloring")) {
                         cfg.set("terra.coloring", true);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
@@ -256,6 +314,9 @@ public class BewertenEvent implements Listener {
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Terra - Nicht Vorhanden")) {
                         cfg.set("terra.aufbau", true);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
@@ -263,6 +324,9 @@ public class BewertenEvent implements Listener {
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Plot - Vegetation")) {
                         cfg.set("plot.vegetation", true);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
@@ -270,6 +334,9 @@ public class BewertenEvent implements Listener {
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Plot - zu leer")) {
                         cfg.set("plot.zuleer", true);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
@@ -277,6 +344,9 @@ public class BewertenEvent implements Listener {
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Plot - Zusammenhangslos")) {
                         cfg.set("plot.zusammenhangslos", true);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
@@ -284,6 +354,9 @@ public class BewertenEvent implements Listener {
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Plot - zu voll")) {
                         cfg.set("plot.zuvoll", true);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
@@ -291,6 +364,9 @@ public class BewertenEvent implements Listener {
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Mapping - Bäume")) {
                         cfg.set("mapping.baeume", true);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
@@ -298,6 +374,9 @@ public class BewertenEvent implements Listener {
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Struktur - Detailsetztung")) {
                         cfg.set("struktur.detailsetztung", true);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
@@ -305,6 +384,9 @@ public class BewertenEvent implements Listener {
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Struktur - Dach")) {
                         cfg.set("struktur.dach", true);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
@@ -312,6 +394,9 @@ public class BewertenEvent implements Listener {
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Struktur - Aufbau")) {
                         cfg.set("struktur.aufbau", true);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
@@ -319,6 +404,9 @@ public class BewertenEvent implements Listener {
                         }
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6Struktur - Details")) {
                         cfg.set("struktur.details", true);
+                        p.closeInventory();
+                        Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                        openAblehnen(p, inv);
                         try {
                             cfg.save(file);
                         } catch (IOException ioException) {
@@ -329,7 +417,18 @@ public class BewertenEvent implements Listener {
             }
         } else if (e.getView().getTitle().equals("§7>> §6Ablehnen? §7<<")) {
             e.setCancelled(true);
-
+            if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§aBestätigen")){
+                p.closeInventory();
+                cfg.set("angenommen", "Abgelehnt");
+                Abgaben.players.remove(PlayerEvent.currentplayer.get(p));
+                PlayerEvent.currentplayer.remove(p);
+                Abgaben.addList(Abgaben.players);
+                Abgaben.addArray();
+            }else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cAbbrechen")){
+                p.closeInventory();
+                Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
+                openAblehnen(p, inv);
+            }
         }
     }
 
@@ -367,7 +466,7 @@ public class BewertenEvent implements Listener {
         } else
             inv.setItem(8, new ItemBuilder(Material.COBBLESTONE_WALL).setName("§6Struktur - Detailsetzung").setLore("", "§7Versuche die Details deiner Struktur besser zu setzen").build());
 
-        if (cfg.get("struktur.detailsetztung").equals(true)) {
+        if (cfg.get("struktur.detailsetzung").equals(true)) {
             inv.setItem(16, new ItemBuilder(Material.OAK_FENCE).setName("§6Struktur - Details").setLore("", "§7Verbessere die Details deiner Strukturen").addEnchantment(Enchantment.CHANNELING, 1, false).addFlag(ItemFlag.HIDE_ENCHANTS).build());
 
         } else
