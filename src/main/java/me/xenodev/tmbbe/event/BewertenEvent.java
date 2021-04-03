@@ -482,7 +482,7 @@ public class BewertenEvent implements Listener {
         } else
             inv.setItem(26, new ItemBuilder(Material.BRICKS).setName("§6Struktur - Aufbau").setLore("", "§7Verbessere den Aufbau deiner Struktur").build());
 
-        if (cfg.get("plot.vegegation").equals(true)) {
+        if (cfg.get("plot.vegetation").equals(true)) {
             inv.setItem(4, new ItemBuilder(Material.VINE).setName("§6Plot - Vegetation").setLore("", "§7Die Vegetation auf deinem Plot fehlt oder ist schlecht plaziert").addEnchantment(Enchantment.CHANNELING, 1, false).addFlag(ItemFlag.HIDE_ENCHANTS).build());
 
         } else
