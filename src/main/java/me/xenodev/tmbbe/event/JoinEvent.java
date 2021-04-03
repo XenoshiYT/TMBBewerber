@@ -80,6 +80,11 @@ public class JoinEvent implements Listener {
             cfg.set("struktur.dach", false);
             cfg.set("struktur.details", false);
             cfg.set("struktur.aufbau", false);
+            try {
+                cfg.save(file);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
 
     }
