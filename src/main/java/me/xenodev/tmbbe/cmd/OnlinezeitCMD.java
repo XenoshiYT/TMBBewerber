@@ -21,7 +21,7 @@ public class OnlinezeitCMD implements CommandExecutor {
                 p.sendMessage("");
                 p.sendMessage("§7----------» §e§lOnlinetimeinformationen §7«----------");
                 p.sendMessage("");
-                p.sendMessage(Main.prefix + "§7Die Onlinetime von §a§l" + t.getName() + "§7:");
+                p.sendMessage(Main.prefix + "§7Die Onlinetime von §a§l" + t.getName() + "§7");
                 p.sendMessage("  §8§l» §7Stunden: §e" + SQLTime.getHours(t.getUniqueId()));
                 p.sendMessage("  §8§l» §7Minuten: §e" + SQLTime.getMinutes(t.getUniqueId()));
                 p.sendMessage("  §8§l» §7Sekunden: §e" + SQLTime.getSeconds(t.getUniqueId()));
@@ -32,7 +32,7 @@ public class OnlinezeitCMD implements CommandExecutor {
                 p.sendMessage("");
                 p.sendMessage("§7----------» §e§lOnlinetimeinformationen §7«----------");
                 p.sendMessage("");
-                p.sendMessage(Main.prefix + "§7Die Onlinetime von §a§l" + "Dir" + "§7:");
+                p.sendMessage(Main.prefix + "§7Die Onlinetime von §a§l" + "Dir" + "§7");
                 p.sendMessage("  §8§l» §7Stunden: §e" + SQLTime.getHours(p.getUniqueId()));
                 p.sendMessage("  §8§l» §7Minuten: §e" + SQLTime.getMinutes(p.getUniqueId()));
                 p.sendMessage("  §8§l» §7Sekunden: §e" + SQLTime.getSeconds(p.getUniqueId()));

@@ -1,5 +1,5 @@
 name: TMBBewerber
-version: 3.4
+version: 4.0
 author: XenoDEV
 api-version: 1.16
 
@@ -54,3 +54,7 @@ commands:
     description: Schaue die Enderchest von einem Spieler an
   grund:
     description: Schaue die Gründe zum ablehnen an
+  playerinfo:
+    description: Siehe die Infos eines Spielers ein
+  pi:
+    description: Siehe die Infos eines Spielers ein

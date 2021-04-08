@@ -1,5 +1,6 @@
 package me.xenodev.tmbbe.event;
 
+import me.xenodev.tmbbe.files.PlayerInfo;
 import me.xenodev.tmbbe.main.Main;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,5 +14,7 @@ public class LeaveEvent  implements Listener {
         Player p = e.getPlayer();
 
         e.setQuitMessage(Main.prefix + "§7Der Spieler §6" + p.getName() + " §7hat §cverlassen");
+        PlayerInfo.setLastDate(p);
+        PlayerInfo.setLastTime(p);
     }
 }

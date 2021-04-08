@@ -21,55 +21,20 @@ public class BewerbenCMD implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player p = (Player)sender;
-
-        //Create Default Configuration
-        File file = new File("plugins//TMBClan//Bewertungen", p.getName() + ".yml");
-        YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-        cfg.set("angenommen", " ");
-
-        //Custom noch nicht implementiert
-        //cfg.set("custom",false);
-        //cfg.set("custom.text",null);
-
         if(cmd.getName().equalsIgnoreCase("bewerben") || cmd.getName().equalsIgnoreCase("abgeben")){
-            if(!cfg.get("angenommen").equals("Angenommen")){
-                if(!cfg.get("angenommen").equals("Teammitglied")){
-                    if(!cfg.get("angenommen").equals("Waiting")) {
+            if(!Bewertungen.getStatus(p).equalsIgnoreCase("Angenommen")){
+                if(!Bewertungen.getStatus(p).equalsIgnoreCase("Teammitglied")){
+                    if(!Bewertungen.getStatus(p).equalsIgnoreCase("Waiting")) {
                         if (!Abgaben.players.contains(p.getName())) {
                             Abgaben.players.add(p.getName());
-                            cfg.set("angenommen","Waiting");
-
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-                            String date = dateFormat.format(new Date());
-
-                            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-                            String time = timeFormat.format(new Date());
-
-                            cfg.set("date",date);
-                            cfg.set("time",time);
-                            cfg.set("terra.forming", false);
-                            cfg.set("terra.aufbau", false);
-                            cfg.set("terra.coloring", false);
-                            cfg.set("terra.nichtvorhanden", false);
-                            cfg.set("plot.vegetation", false);
-                            cfg.set("plot.zuleer", false);
-                            cfg.set("plot.zusammenhangslos", false);
-                            cfg.set("plot.zuvoll", false);
-                            cfg.set("mapping.baeume", false);
-                            cfg.set("struktur.detailsetzung", false);
-                            cfg.set("struktur.dach", false);
-                            cfg.set("struktur.details", false);
-                            cfg.set("struktur.aufbau", false);
-                            try {
-                                cfg.save(file);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            Bewertungen.setStatus(p, "Waiting");
+                            Bewertungen.setDate(p);
+                            Bewertungen.setTime(p);
                             p.sendMessage(Main.prefix + "§7Du hast deine Bewerbung abgegeben");
 
                             for(Player all : Bukkit.getOnlinePlayers()){
                                 if(all.hasPermission("tmb.bewerten")){
-                                    all.sendMessage(Main.prefix + "§7Der Spieler §a" + p.getName() + " §7hat seine Bewerbung abgegeben");
+                                    all.sendMessage(Main.prefix + "§a" + p.getName() + " §7hat seine Bewerbung abgegeben");
                                 }
                             }
                         } else {

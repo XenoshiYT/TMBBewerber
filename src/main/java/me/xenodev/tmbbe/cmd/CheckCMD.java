@@ -3,7 +3,9 @@ package me.xenodev.tmbbe.cmd;
 import me.xenodev.tmbbe.files.Bewertungen;
 import me.xenodev.tmbbe.main.Main;
 import me.xenodev.tmbbe.utils.ItemBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,64 +21,127 @@ public class CheckCMD implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player p = (Player) sender;
-        File file = new File("plugins//TMBClan//Bewertungen", p.getName() + ".yml");
-        YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
         if (cmd.getName().equalsIgnoreCase("check")) {
-            p.sendMessage("");
-            p.sendMessage("§7----------» §e§lBewerbungsinformationen §7«----------");
-            p.sendMessage("");
-            p.sendMessage(Main.prefix + "§7Dein Bewerberstatus lautet:");
-            p.sendMessage("  §8§l» §a" + cfg.get("angenommen").toString());
-            p.sendMessage(Main.prefix + "§7Deine Anmeldezeit:");
-            p.sendMessage("  §8§l» §9" + cfg.get("date").toString() + " §7- §9" + cfg.get("time").toString());
-            if (cfg.get("angenommen").equals("Abgelehnt")) {
-                p.sendMessage(Main.prefix + "§7Die Ablehnungsgründe lauten:");
-                if (cfg.get("terra.forming").equals(true)) {
-                    p.sendMessage("  §8§l» §eVersuche dein Terraforming zu Verbessern");
-                }
-                if (cfg.get("terra.aufbau").equals(true)) {
-                    p.sendMessage("  §8§l» §eVerbessere den Aufbau deines Terras");
-                }
-                if (cfg.get("terra.nichtvorhanden").equals(true)) {
-                    p.sendMessage("  §8§l» §eDu musst dein Terra formen");
-                }
-                if (cfg.get("terra.coloring").equals(true)) {
-                    p.sendMessage("  §8§l» §eVerbessere dein Terracoloring durch passende Blockwahl");
-                }
-                if (cfg.get("struktur.detailsetzung").equals(true)) {
-                    p.sendMessage("  §8§l» §eVersuche die Details deiner Struktur besser zu setzen");
-                }
-                if (cfg.get("struktur.details").equals(true)) {
-                    p.sendMessage("  §8§l» §eVerbessere die Details deiner Strukturen");
-                }
-                if (cfg.get("struktur.dach").equals(true)) {
-                    p.sendMessage("  §8§l» §eDer Aufbau deines Dachs ist verbesserungswürdig");
-                }
-                if (cfg.get("struktur.aufbau").equals(true)) {
-                    p.sendMessage("  §8§l» §eVerbessere den Aufbau deiner Struktur");
-                }
-                if (cfg.get("plot.vegegation").equals(true)) {
-                    p.sendMessage("  §8§l» §eDie Vegetation auf deinem Plot fehlt oder ist schlecht plaziert");
-                }
-                if (cfg.get("plot.zuleer").equals(true)) {
-                    p.sendMessage("  §8§l» §eDein Plot fühlt sich zu leer an");
-                }
-                if (cfg.get("plot.zusammenhangslos").equals(true)) {
-                    p.sendMessage("  §8§l» §eDer Aufbau deines Plots hat keinen zusammenhang");
-                }
-                if (cfg.get("plot.zuvoll").equals(true)) {
-                    p.sendMessage("  §8§l» §eDein Plot fühlt sich zu voll an");
-                }
-                if (cfg.get("mapping.baeume").equals(true)) {
-                    p.sendMessage("  §8§l» §eDie Qualität deiner Bäume entspricht nicht unseren Standards");
+            if(args.length == 1){
+                OfflinePlayer t = Bukkit.getPlayerExact(args[0]);
+                p.sendMessage("");
+                p.sendMessage("§7----------» §e§lBewerbungsinformationen  §7«----------");
+                p.sendMessage("");
+                p.sendMessage(Main.prefix + "§7Die Informationen von §a§l" + t.getName() + "§7");
+                p.sendMessage("  §8§l» §7Status: §9" + Bewertungen.getStatus(t));
+                p.sendMessage("  §8§l» §7Abgabezeit: §9" + Bewertungen.getDate(t) + " §7- §9" + Bewertungen.getTime(t));
+                if(Bewertungen.getStatus(t).equalsIgnoreCase("Abgelehnt")) {
+                    p.sendMessage("  §8§l» §7Ablehngründe:");
+                    if (Bewertungen.getGrund(t, "Terra.Form").equals(true)) {
+                        p.sendMessage("  §8§l- §9Versuche dein Terraforming zu verbessern");
+                    }
+                    if (Bewertungen.getGrund(t, "Terra.Aufbau").equals(true)) {
+                        p.sendMessage("  §8§l- §9Verbessere den Aufbau deines Terras");
+                    }
+                    if (Bewertungen.getGrund(t, "Terra.Besitz").equals(true)) {
+                        p.sendMessage("  §8§l- §9Dein Plot muss Terraforming besitzen");
+                    }
+                    if (Bewertungen.getGrund(t, "Terra.Coloring").equals(true)) {
+                        p.sendMessage("  §8§l- §9Verbessere dein Terracoloring durch passende Blockwahl");
+                    }
+                    if (Bewertungen.getGrund(t, "Struktur.Detailsetzung").equals(true)) {
+                        p.sendMessage("  §8§l- §9Versuche die Details deiner Struktur besser zu setzen");
+                    }
+                    if (Bewertungen.getGrund(t, "Struktur.Details").equals(true)) {
+                        p.sendMessage("  §8§l- §9Verbessere die Details deiner Strukturen");
+                    }
+                    if (Bewertungen.getGrund(t, "Struktur.Dach").equals(true)) {
+                        p.sendMessage("  §8§l- §9Der Aufbau deines Daches muss verbessert werden");
+                    }
+                    if (Bewertungen.getGrund(t, "Struktur.Aufbau").equals(true)) {
+                        p.sendMessage("  §8§l- §9Verbessere den Aufbau deiner Struktur");
+                    }
+                    if (Bewertungen.getGrund(t, "Plot.Vegetation").equals(true)) {
+                        p.sendMessage("  §8§l- §9Die Vegetation auf deinem Plot fehlt oder ist schlecht plaziert");
+                    }
+                    if (Bewertungen.getGrund(t, "Plot.Leer").equals(true)) {
+                        p.sendMessage("  §8§l- §9Dein Plot fühlt sich zu leer an");
+                    }
+                    if (Bewertungen.getGrund(t, "Plot.Zusammenhang").equals(true)) {
+                        p.sendMessage("  §8§l- §9Der Aufbau deines Plots hat keinen zusammenhang");
+                    }
+                    if (Bewertungen.getGrund(t, "Plot.Voll").equals(true)) {
+                        p.sendMessage("  §8§l- §9Dein Plot fühlt sich zu voll an");
+                    }
+                    if (Bewertungen.getGrund(t, "Mapping.Baum").equals(true)) {
+                        p.sendMessage("  §8§l- §9Verbessere die Qualität deiner Bäume");
+                    }
+                    if (Bewertungen.getGrund(t, "Mapping.Organic").equals(true)) {
+                        p.sendMessage("  §8§l- §9Verbessere den Aufbau deiner Organic");
+                    }
+                    if (Bewertungen.getGrund(t, "Mapping.Einrichtung").equals(true)) {
+                        p.sendMessage("  §8§l- §9Verbessere den Aufbau deiner Einrichtung");
+                    }
                 }
 
-                    p.sendMessage("  §8§l» §e");
+                p.sendMessage("");
+                p.sendMessage("§7----------» §e§lBewerbungsinformationen §7«----------");
+                p.sendMessage("");
+            }else{
+                p.sendMessage("");
+                p.sendMessage("§7----------» §e§lBewerbungsinformationen §7«----------");
+                p.sendMessage("");
+                p.sendMessage(Main.prefix + "§7Die Informationen von §a§l" + "Dir" + "§7");
+                p.sendMessage("  §8§l» §7Status: §9" + Bewertungen.getStatus(p));
+                p.sendMessage("  §8§l» §7Abgabezeit: §9" + Bewertungen.getDate(p) + " §7- §9" + Bewertungen.getTime(p));
+                if(Bewertungen.getStatus(p).equalsIgnoreCase("Abgelehnt")) {
+                    p.sendMessage("  §8§l» §7Ablehngründe:");
+                    if (Bewertungen.getGrund(p, "Terra.Form").equals(true)) {
+                        p.sendMessage("  §8§l- §9Versuche dein Terraforming zu verbessern");
+                    }
+                    if (Bewertungen.getGrund(p, "Terra.Aufbau").equals(true)) {
+                        p.sendMessage("  §8§l- §9Verbessere den Aufbau deines Terras");
+                    }
+                    if (Bewertungen.getGrund(p, "Terra.Besitz").equals(true)) {
+                        p.sendMessage("  §8§l- §9Dein Plot muss Terraforming besitzen");
+                    }
+                    if (Bewertungen.getGrund(p, "Terra.Coloring").equals(true)) {
+                        p.sendMessage("  §8§l- §9Verbessere dein Terracoloring durch passende Blockwahl");
+                    }
+                    if (Bewertungen.getGrund(p, "Struktur.Detailsetzung").equals(true)) {
+                        p.sendMessage("  §8§l- §9Versuche die Details deiner Struktur besser zu setzen");
+                    }
+                    if (Bewertungen.getGrund(p, "Struktur.Details").equals(true)) {
+                        p.sendMessage("  §8§l- §9Verbessere die Details deiner Strukturen");
+                    }
+                    if (Bewertungen.getGrund(p, "Struktur.Dach").equals(true)) {
+                        p.sendMessage("  §8§l- §9Der Aufbau deines Daches muss verbessert werden");
+                    }
+                    if (Bewertungen.getGrund(p, "Struktur.Aufbau").equals(true)) {
+                        p.sendMessage("  §8§l- §9Verbessere den Aufbau deiner Struktur");
+                    }
+                    if (Bewertungen.getGrund(p, "Plot.Vegetation").equals(true)) {
+                        p.sendMessage("  §8§l- §9Die Vegetation auf deinem Plot fehlt oder ist schlecht plaziert");
+                    }
+                    if (Bewertungen.getGrund(p, "Plot.Leer").equals(true)) {
+                        p.sendMessage("  §8§l- §9Dein Plot fühlt sich zu leer an");
+                    }
+                    if (Bewertungen.getGrund(p, "Plot.Zusammenhang").equals(true)) {
+                        p.sendMessage("  §8§l- §9Der Aufbau deines Plots hat keinen zusammenhang");
+                    }
+                    if (Bewertungen.getGrund(p, "Plot.Voll").equals(true)) {
+                        p.sendMessage("  §8§l- §9Dein Plot fühlt sich zu voll an");
+                    }
+                    if (Bewertungen.getGrund(p, "Mapping.Baum").equals(true)) {
+                        p.sendMessage("  §8§l- §9Verbessere die Qualität deiner Bäume");
+                    }
+                    if (Bewertungen.getGrund(p, "Mapping.Organic").equals(true)) {
+                        p.sendMessage("  §8§l- §9Verbessere den Aufbau deiner Organic");
+                    }
+                    if (Bewertungen.getGrund(p, "Mapping.Einrichtung").equals(true)) {
+                        p.sendMessage("  §8§l- §9Verbessere den Aufbau deiner Einrichtung");
+                    }
+                }
+
+                p.sendMessage("");
+                p.sendMessage("§7----------» §e§lBewerbungsinformationen §7«----------");
+                p.sendMessage("");
             }
-
-            p.sendMessage("");
-            p.sendMessage("§7----------» §e§lBewerbungsinformationen §7«----------");
-            p.sendMessage("");
         }
 
         return false;

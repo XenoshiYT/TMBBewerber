@@ -17,26 +17,28 @@ public class LöschenCMD implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player p = (Player)sender;
-        File file = new File("plugins//TMBClan//Bewertungen", p.getName() + ".yml");
-        YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
         if(cmd.getName().equalsIgnoreCase("abbrechen") || cmd.getName().equalsIgnoreCase("löschen")){
-            if(!cfg.get("angenommen").equals("Abgelehnt") || !cfg.get("angenommen").equals("Angenommen")){
-                if(Abgaben.players.contains(p.getName()) && cfg.get("angenommen").equals("Waiting")){
-                    Abgaben.players.remove(p.getName());
-                    file.delete();
-                    p.sendMessage(Main.prefix + "§7Du hast deine Bewerbung gelöscht");
+            if(!Bewertungen.getStatus(p).equalsIgnoreCase("Teammitglied")) {
+                if (!Bewertungen.getStatus(p).equalsIgnoreCase("Abgelehnt") || !Bewertungen.getStatus(p).equalsIgnoreCase("Angenommen")) {
+                    if (Abgaben.players.contains(p.getName()) && Bewertungen.getStatus(p).equalsIgnoreCase("Waiting")) {
+                        Abgaben.players.remove(p.getName());
+                        Bewertungen.setStatus(p, "Nicht Abgegeben");
+                        p.sendMessage(Main.prefix + "§7Du hast deine Bewerbung gelöscht");
 
-                    for(Player all : Bukkit.getOnlinePlayers()){
-                        if(all.hasPermission("tmb.bewerten")){
-                            all.sendMessage(Main.prefix + "§7Der Spieler §a" + p.getName() + " §7hat seine Bewerbung zurückgezogen");
+                        for (Player all : Bukkit.getOnlinePlayers()) {
+                            if (all.hasPermission("tmb.bewerten")) {
+                                all.sendMessage(Main.prefix + "§a" + p.getName() + " §7hat seine Bewerbung zurückgezogen");
+                            }
                         }
+                    } else {
+                        p.sendMessage(Main.error + "§cDu hast dich noch nicht beworben");
                     }
-                }else{
-                    p.sendMessage(Main.error + "§cDu hast dich noch nicht beworben");
+                } else {
+                    p.sendMessage(Main.error + "§cDeine Bewerbung wurde schon bearbeitet");
                 }
             }else{
-                p.sendMessage(Main.error + "§cDeine Bewerbung wurde schon bearbeitet");
+                p.sendMessage(Main.error + "§cDu bist ein Teammitglied und kannst die Bewerbung nicht löschen");
             }
         }
         return false;

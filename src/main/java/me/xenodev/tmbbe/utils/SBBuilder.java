@@ -19,12 +19,8 @@ import java.io.File;
 public class SBBuilder {
 
     private static Team team;
-    private static File file;
-    private static YamlConfiguration cfg;
 
     public static void setScoreboard(Player p) {
-        file = new File("plugins//TMBClan//Bewertungen", p.getName() + ".yml");
-        cfg = YamlConfiguration.loadConfiguration(file);
 
         Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
         Objective obj = board.registerNewObjective("main", "main", "§7» §5§lT§deam§5§lM§dega§5§lB§dyte §7«");
@@ -40,7 +36,7 @@ public class SBBuilder {
         obj.getScore(updateTeam(board, "rang", "§9§l" + permgroup.getName(), "", ChatColor.BLUE)).setScore(10);
         obj.getScore("§5").setScore(9);
         obj.getScore("§fBewerberstatus").setScore(8);
-        obj.getScore(updateTeam(board, "status", "§e§l" + cfg.getString("angenommen"), "", ChatColor.GRAY)).setScore(7);
+        obj.getScore(updateTeam(board, "status", "§e§l" + Bewertungen.getStatus(p), "", ChatColor.GRAY)).setScore(7);
         obj.getScore("§4").setScore(6);
         obj.getScore("§fOnlinezeit").setScore(5);
         obj.getScore(updateTeam(board, "time", "§a§l" + SQLTime.changeTime(p.getUniqueId()), "", ChatColor.YELLOW)).setScore(4);
@@ -52,8 +48,6 @@ public class SBBuilder {
     }
 
     public static void updateScoreboard(Player p) {
-        file = new File("plugins//TMBClan//Bewertungen", p.getName() + ".yml");
-        cfg = YamlConfiguration.loadConfiguration(file);
         Scoreboard board = p.getScoreboard();
         Objective obj = board.getObjective("main");
 
@@ -61,7 +55,7 @@ public class SBBuilder {
         IPermissionGroup permgroup = CloudNetDriver.getInstance().getPermissionManagement().getHighestPermissionGroup(permuser);
 
         obj.getScore(updateTeam(board, "rang", "§9§l" + permgroup.getName(), "", ChatColor.BLUE)).setScore(10);
-        obj.getScore(updateTeam(board, "status", "§e§l" + cfg.getString("angenommen"), "", ChatColor.GRAY)).setScore(7);
+        obj.getScore(updateTeam(board, "status", "§e§l" + Bewertungen.getStatus(p), "", ChatColor.GRAY)).setScore(7);
         obj.getScore(updateTeam(board, "time", "§a§l" + SQLTime.changeTime(p.getUniqueId()), "", ChatColor.YELLOW)).setScore(4);
     }
 

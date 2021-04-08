@@ -8,6 +8,7 @@ import me.xenodev.tmbbe.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,6 +16,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
+import java.io.File;
 import java.util.HashMap;
 
 public class PlayerEvent implements Listener {
@@ -31,7 +33,8 @@ public class PlayerEvent implements Listener {
                     Inventory inv = Bukkit.createInventory(p, 9 * 6, "§7>> §6Bewerber §7<<");
 
                     for (String name : Abgaben.players) {
-                        inv.addItem(new ItemBuilder(Material.PLAYER_HEAD).setOwner(name).setName("§6" + name).build());
+                        OfflinePlayer t = Bukkit.getPlayerExact(name);
+                        inv.addItem(new ItemBuilder(Material.PLAYER_HEAD).setOwner(name).setName("§6" + name).setLore("§7Hat sich beworben am", "", "§7Datum: §a" + Bewertungen.getDate(t), "§7Zeit: §a" + Bewertungen.getTime(t)).build());
                     }
 
                     for (int i = 36; i < 45; i++) {
@@ -56,7 +59,6 @@ public class PlayerEvent implements Listener {
             }else if(e.getCurrentItem().getType().equals(Material.BLACK_STAINED_GLASS_PANE) || e.getCurrentItem().getType().equals(Material.BARRIER)) {
                 return;
             }else{
-
                 String name = e.getCurrentItem().getItemMeta().getDisplayName().replace("§6", "");
                 currentplayer.put(p, name);
                 p.closeInventory();

@@ -86,6 +86,9 @@ public class Main extends JavaPlugin {
         getServer().getPluginCommand("tp").setExecutor(new TeleportCMD());
         getServer().getPluginCommand("tphere").setExecutor(new TeleportCMD());
         getServer().getPluginCommand("tpcord").setExecutor(new TeleportCMD());
+
+        getServer().getPluginCommand("pi").setExecutor(new PlayerInfoCMD());
+        getServer().getPluginCommand("playerinfo").setExecutor(new PlayerInfoCMD());
     }
 
     private void ConnectMySQL(){
