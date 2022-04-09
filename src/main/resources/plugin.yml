@@ -58,3 +58,7 @@ commands:
     description: Siehe die Infos eines Spielers ein
   pi:
     description: Siehe die Infos eines Spielers ein
+  clear:
+    description: Lösche das Inventar eines Spielers
+  status:
+    description: Setze den Status eines Spielers

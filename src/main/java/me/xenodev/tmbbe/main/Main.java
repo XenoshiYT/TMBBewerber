@@ -29,7 +29,6 @@ public class Main extends JavaPlugin {
         cmds();
         Abgaben.addArray();
         startScoreboard();
-        startOnlinetime();
     }
 
     @Override
@@ -46,6 +45,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SpawnCMD(), this);
         getServer().getPluginManager().registerEvents(new DeathEvent(), this);
         getServer().getPluginManager().registerEvents(new GrundCMD(), this);
+        getServer().getPluginManager().registerEvents(new ChatEvent(), this);
     }
 
     private void cmds(){
@@ -89,6 +89,9 @@ public class Main extends JavaPlugin {
 
         getServer().getPluginCommand("pi").setExecutor(new PlayerInfoCMD());
         getServer().getPluginCommand("playerinfo").setExecutor(new PlayerInfoCMD());
+
+        getServer().getPluginCommand("clear").setExecutor(new ClearCMD());
+        getServer().getPluginCommand("status").setExecutor(new StatusCMD());
     }
 
     private void ConnectMySQL(){
@@ -105,29 +108,7 @@ public class Main extends JavaPlugin {
                         SBBuilder.updateScoreboard(all);
                     }
                 }
-            }, 0L, 20L);
-        }
-    }
-
-    public void startOnlinetime() {
-        if (!Bukkit.getScheduler().isCurrentlyRunning(this.sched1)) {
-            this.sched = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.instance, (Runnable)new Runnable() {
-                @Override
-                public void run() {
-                    for (final Player all : Bukkit.getOnlinePlayers()) {
-                        SQLTime.addSeconds(all.getUniqueId(), 1);
-                        if(SQLTime.getSeconds(all.getUniqueId()) == 60){
-                            SQLTime.addMinutes(all.getUniqueId(), 1);
-                            SQLTime.setSeconds(all.getUniqueId(), 0);
-                        }
-
-                        if(SQLTime.getMinutes(all.getUniqueId()) == 60){
-                            SQLTime.addHours(all.getUniqueId(), 1);
-                            SQLTime.setMinutes(all.getUniqueId(), 0);
-                        }
-                    }
-                }
-            }, 0L, 20L);
+            }, 0L, 20*60);
         }
     }
 }

@@ -35,30 +35,20 @@ public class JoinEvent implements Listener {
 
 
         SBBuilder.setScoreboard(p);
-        IPermissionManagement manager = CloudNetDriver.getInstance().getPermissionManagement();
-        IPermissionUser player = manager.getUser(p.getUniqueId());
-        if(player.inGroup("Owner") || player.inGroup("Admin") || player.inGroup("Developer") || player.inGroup("Developer+") || player.inGroup("Builder") || player.inGroup("Chefbuilder") || player.inGroup("Testbuilder") || player.inGroup("Supporter")){
+        //IPermissionManagement manager = CloudNetDriver.getInstance().getPermissionManagement();
+        //IPermissionUser player = manager.getUser(p.getUniqueId());
+        if(p.hasPermission("tmb.bewerten")){
             p.sendMessage("");
             p.sendMessage(Main.prefix + "§cEs gibt zur Zeit §e" + Abgaben.players.size() + " §cabgegebene Bewerbungen");
             p.sendMessage("");
+        }
 
-            if(!file1.exists()){
-                Bewertungen.setStatus(p, "Teammitglied");
-                Bewertungen.setDate(p);
-                Bewertungen.setTime(p);
-            }
-            if(!file2.exists()){
-                PlayerInfo.setFirstDate(p);
-                PlayerInfo.setFirstTime(p);
-            }
-        }else{
-            if(!file1.exists()){
-                Bewertungen.setStatus(p, "Nicht Abgegeben");
-            }
-            if(!file2.exists()){
-                PlayerInfo.setFirstDate(p);
-                PlayerInfo.setFirstTime(p);
-            }
+        if(!file1.exists()){
+            Bewertungen.setStatus(p, "Nicht Abgegeben");
+        }
+        if(!file2.exists()){
+            PlayerInfo.setFirstDate(p);
+            PlayerInfo.setFirstTime(p);
         }
         PlayerInfo.setJoins(p, PlayerInfo.getJoins(p) + 1);
 

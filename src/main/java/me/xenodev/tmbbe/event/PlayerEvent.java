@@ -33,7 +33,7 @@ public class PlayerEvent implements Listener {
                     Inventory inv = Bukkit.createInventory(p, 9 * 6, "§7>> §6Bewerber §7<<");
 
                     for (String name : Abgaben.players) {
-                        OfflinePlayer t = Bukkit.getPlayerExact(name);
+                        OfflinePlayer t = Bukkit.getOfflinePlayer(name);
                         inv.addItem(new ItemBuilder(Material.PLAYER_HEAD).setOwner(name).setName("§6" + name).setLore("§7Hat sich beworben am", "", "§7Datum: §a" + Bewertungen.getDate(t), "§7Zeit: §a" + Bewertungen.getTime(t)).build());
                     }
 

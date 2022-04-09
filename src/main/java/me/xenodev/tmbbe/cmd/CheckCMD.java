@@ -23,7 +23,7 @@ public class CheckCMD implements CommandExecutor {
         Player p = (Player) sender;
         if (cmd.getName().equalsIgnoreCase("check")) {
             if(args.length == 1){
-                OfflinePlayer t = Bukkit.getPlayerExact(args[0]);
+                OfflinePlayer t = Bukkit.getOfflinePlayer(args[0]);
                 p.sendMessage("");
                 p.sendMessage("§7----------» §e§lBewerbungsinformationen  §7«----------");
                 p.sendMessage("");
@@ -77,6 +77,10 @@ public class CheckCMD implements CommandExecutor {
                     if (Bewertungen.getGrund(t, "Mapping.Einrichtung").equals(true)) {
                         p.sendMessage("  §8§l- §9Verbessere den Aufbau deiner Einrichtung");
                     }
+
+                    p.sendMessage("");
+                    p.sendMessage("  §8§l» §7Bemerkung:");
+                    p.sendMessage("  §8§l- §c" + Bewertungen.getBemerkung(t));
                 }
 
                 p.sendMessage("");
@@ -136,6 +140,10 @@ public class CheckCMD implements CommandExecutor {
                     if (Bewertungen.getGrund(p, "Mapping.Einrichtung").equals(true)) {
                         p.sendMessage("  §8§l- §9Verbessere den Aufbau deiner Einrichtung");
                     }
+
+                    p.sendMessage("");
+                    p.sendMessage("  §8§l» §7Bemerkung:");
+                    p.sendMessage("  §8§l- §c" + Bewertungen.getBemerkung(p));
                 }
 
                 p.sendMessage("");

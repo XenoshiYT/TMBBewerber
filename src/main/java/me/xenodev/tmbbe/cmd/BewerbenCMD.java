@@ -7,14 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
 
 public class BewerbenCMD implements CommandExecutor {
 
@@ -37,6 +30,7 @@ public class BewerbenCMD implements CommandExecutor {
                                     all.sendMessage(Main.prefix + "§a" + p.getName() + " §7hat seine Bewerbung abgegeben");
                                 }
                             }
+
                         } else {
                             p.sendMessage(Main.error + "§cDu hast dich schon beworben");
                         }

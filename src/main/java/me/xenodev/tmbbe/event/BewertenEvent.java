@@ -85,9 +85,11 @@ public class BewertenEvent implements Listener {
                     IPermissionUser player = manager.getUser(t.getUniqueId());
                     if (player.inGroup("Neuling")) {
                         player.addGroup("Azubi");
+                        manager.updateUser(player);
                     } else if (player.inGroup("Azubi")) {
                         player.removeGroup("Azubi");
-                        player.addGroup("Testbuilder");
+                        player.addGroup("Test-Builder");
+                        manager.updateUser(player);
                     }
                     Abgaben.players.remove(PlayerEvent.currentplayer.get(p));
                     PlayerEvent.currentplayer.remove(p);
@@ -128,6 +130,7 @@ public class BewertenEvent implements Listener {
                 Bewertungen.setGrund(t, "Mapping.Baum", false);
                 Bewertungen.setGrund(t, "Mapping.Organic", false);
                 Bewertungen.setGrund(t, "Mapping.Einrichtung", false);
+                Bewertungen.setBemerkung(t, null);
                 PlayerEvent.currentplayer.remove(p);
             } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§aBestätigen")) {
                 p.closeInventory();
@@ -161,7 +164,7 @@ public class BewertenEvent implements Listener {
                         Bewertungen.setGrund(t, "Plot.Vegetation", false);
                         p.closeInventory();
                         openAblehnen(p);
-                    } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6§lPlot - zu leer")) {
+                    } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6§lPlot - zu Leer")) {
                         Bewertungen.setGrund(t, "Plot.Leer", false);
                         p.closeInventory();
                         openAblehnen(p);
@@ -169,7 +172,7 @@ public class BewertenEvent implements Listener {
                         Bewertungen.setGrund(t, "Plot.Zusammenhang", false);
                         p.closeInventory();
                         openAblehnen(p);
-                    } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6§lPlot - zu voll")) {
+                    } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6§lPlot - zu Voll")) {
                         Bewertungen.setGrund(t, "Plot.Voll", false);
                         p.closeInventory();
                         openAblehnen(p);
@@ -223,7 +226,7 @@ public class BewertenEvent implements Listener {
                         Bewertungen.setGrund(t, "Plot.Vegetation", true);
                         p.closeInventory();
                         openAblehnen(p);
-                    } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6§lPlot - zu leer")) {
+                    } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6§lPlot - zu Leer")) {
                         Bewertungen.setGrund(t, "Plot.Leer", true);
                         p.closeInventory();
                         openAblehnen(p);
@@ -231,7 +234,7 @@ public class BewertenEvent implements Listener {
                         Bewertungen.setGrund(t, "Plot.Zusammenhang", true);
                         p.closeInventory();
                         openAblehnen(p);
-                    } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6§lPlot - zu voll")) {
+                    } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6§lPlot - zu Voll")) {
                         Bewertungen.setGrund(t, "Plot.Voll", true);
                         p.closeInventory();
                         openAblehnen(p);
@@ -263,6 +266,11 @@ public class BewertenEvent implements Listener {
                         Bewertungen.setGrund(t, "Struktur.Details", true);
                         p.closeInventory();
                         openAblehnen(p);
+                    } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§6§lBemerkung")) {
+                        ChatEvent.bemerkungplayer.add(p);
+                        p.sendMessage(Main.prefix + "§4§lSchreibe deine Bemerkung in den Chat");
+                        p.sendMessage(Main.prefix + "§4§loder um abzubrechen: !abbrechen");
+                        p.closeInventory();
                     } else p.sendMessage(Main.error + "§cDiesen Grund gibt es nicht");
                 }
             }
@@ -283,13 +291,15 @@ public class BewertenEvent implements Listener {
         }
     }
 
-    private void openAblehnen(Player p) {
+    public static void openAblehnen(Player p) {
         OfflinePlayer t = Bukkit.getOfflinePlayer(PlayerEvent.currentplayer.get(p));
         Inventory inv = Bukkit.createInventory(null, 9 * 6, "§7>> §6Grund §7<<");
 
         for (int i = 0; i < 54; i++) {
             inv.setItem(i, new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).build());
         }
+
+        inv.setItem(4, new ItemBuilder(Material.BOOK).setName("§6§lBemerkung").setLore("", Bewertungen.getBemerkung(t)).build());
 
         if (Bewertungen.getGrund(t, "Terra.Form").equals(true)) {
             inv.setItem(0, new ItemBuilder(Material.GRASS_BLOCK).setName("§6§lTerra - Forming").setLore("", "§7Versuche dein Terraforming zu verbessern").addEnchantment(Enchantment.CHANNELING, 1).addFlag(ItemFlag.HIDE_ENCHANTS).build());
@@ -333,24 +343,24 @@ public class BewertenEvent implements Listener {
             inv.setItem(26, new ItemBuilder(Material.BRICKS).setName("§6§lStruktur - Aufbau").setLore("", "§7Verbessere den Aufbau deiner Struktur").build());
         }
         if (Bewertungen.getGrund(t, "Plot.Leer").equals(true)) {
-            inv.setItem(2, new ItemBuilder(Material.WHITE_STAINED_GLASS).setName("§6§lPlot - Leer").setLore("", "§7Dein Plot fühlt sich zu leer an").addEnchantment(Enchantment.CHANNELING, 1).addFlag(ItemFlag.HIDE_ENCHANTS).build());
+            inv.setItem(2, new ItemBuilder(Material.WHITE_STAINED_GLASS).setName("§6§lPlot - zu Leer").setLore("", "§7Dein Plot fühlt sich zu leer an").addEnchantment(Enchantment.CHANNELING, 1).addFlag(ItemFlag.HIDE_ENCHANTS).build());
         }else{
-            inv.setItem(2, new ItemBuilder(Material.WHITE_STAINED_GLASS).setName("§6§lPlot - Leer").setLore("", "§7Dein Plot fühlt sich zu leer an").build());
+            inv.setItem(2, new ItemBuilder(Material.WHITE_STAINED_GLASS).setName("§6§lPlot - zu Leer").setLore("", "§7Dein Plot fühlt sich zu leer an").build());
         }
         if (Bewertungen.getGrund(t, "Plot.Vegetation").equals(true)) {
-            inv.setItem(3, new ItemBuilder(Material.VINE).setName("§6§lPlot - Vegetation").setLore("", "§7Die Vegetation auf deinem Plot fehlt oder ist schlecht plaziert").addEnchantment(Enchantment.CHANNELING, 1).addFlag(ItemFlag.HIDE_ENCHANTS).build());
+            inv.setItem(11, new ItemBuilder(Material.VINE).setName("§6§lPlot - Vegetation").setLore("", "§7Die Vegetation auf deinem Plot fehlt oder ist schlecht plaziert").addEnchantment(Enchantment.CHANNELING, 1).addFlag(ItemFlag.HIDE_ENCHANTS).build());
         }else{
-            inv.setItem(3, new ItemBuilder(Material.VINE).setName("§6§lPlot - Vegetation").setLore("", "§7Die Vegetation auf deinem Plot fehlt oder ist schlecht plaziert").build());
+            inv.setItem(11, new ItemBuilder(Material.VINE).setName("§6§lPlot - Vegetation").setLore("", "§7Die Vegetation auf deinem Plot fehlt oder ist schlecht plaziert").build());
         }
         if (Bewertungen.getGrund(t, "Plot.Zusammenhang").equals(true)) {
-            inv.setItem(5, new ItemBuilder(Material.MAP).setName("§6§lPlot - Zusammenhangslos").setLore("", "§7Der Aufbau deines Plots hat keinen zusammenhang").addEnchantment(Enchantment.CHANNELING, 1).addFlag(ItemFlag.HIDE_ENCHANTS).build());
+            inv.setItem(15, new ItemBuilder(Material.MAP).setName("§6§lPlot - Zusammenhangslos").setLore("", "§7Der Aufbau deines Plots hat keinen zusammenhang").addEnchantment(Enchantment.CHANNELING, 1).addFlag(ItemFlag.HIDE_ENCHANTS).build());
         }else{
-            inv.setItem(5, new ItemBuilder(Material.MAP).setName("§6§lPlot - Zusammenhangslos").setLore("", "§7Der Aufbau deines Plots hat keinen zusammenhang").build());
+            inv.setItem(15, new ItemBuilder(Material.MAP).setName("§6§lPlot - Zusammenhangslos").setLore("", "§7Der Aufbau deines Plots hat keinen zusammenhang").build());
         }
         if (Bewertungen.getGrund(t, "Plot.Voll").equals(true)) {
-            inv.setItem(6, new ItemBuilder(Material.BLACK_STAINED_GLASS).setName("§6§lPlot - Voll").setLore("", "§7Dein Plot fühlt sich zu voll an").addEnchantment(Enchantment.CHANNELING, 1).addFlag(ItemFlag.HIDE_ENCHANTS).build());
+            inv.setItem(6, new ItemBuilder(Material.BLACK_STAINED_GLASS).setName("§6§lPlot - zu Voll").setLore("", "§7Dein Plot fühlt sich zu voll an").addEnchantment(Enchantment.CHANNELING, 1).addFlag(ItemFlag.HIDE_ENCHANTS).build());
         }else{
-            inv.setItem(6, new ItemBuilder(Material.BLACK_STAINED_GLASS).setName("§6§lPlot - Voll").setLore("", "§7Dein Plot fühlt sich zu voll an").build());
+            inv.setItem(6, new ItemBuilder(Material.BLACK_STAINED_GLASS).setName("§6§lPlot - zu Voll").setLore("", "§7Dein Plot fühlt sich zu voll an").build());
         }
         if (Bewertungen.getGrund(t, "Mapping.Baum").equals(true)) {
             inv.setItem(21, new ItemBuilder(Material.SPRUCE_SAPLING).setName("§6§lMapping - Bäume").setLore("", "§7Verbessere die Qualität deiner Bäume").addEnchantment(Enchantment.CHANNELING, 1).addFlag(ItemFlag.HIDE_ENCHANTS).build());

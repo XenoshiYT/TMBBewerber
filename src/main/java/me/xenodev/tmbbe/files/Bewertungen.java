@@ -96,4 +96,27 @@ public class Bewertungen {
 
         return cfg.getBoolean(grund);
     }
+
+    public static void setBemerkung(OfflinePlayer p, String bemerkung){
+        File file = new File("plugins//TMBClan//Bewerber", p.getUniqueId() + ".yml");
+        YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+
+        cfg.set("Bemerkung", bemerkung);
+        try {
+            cfg.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String getBemerkung(OfflinePlayer p){
+        File file = new File("plugins//TMBClan//Bewerber", p.getUniqueId() + ".yml");
+        YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+
+        if(cfg.getString("Bemerkung") != null){
+            return cfg.getString("Bemerkung");
+        }
+
+        return "keine Bemerkung";
+    }
 }
